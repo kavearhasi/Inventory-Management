@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block title %}Add Product Movement{% endblock %}
+{% block body %}
+{% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        <div class="space-y-4">
+            {% for category, message in messages %}
+           <div class="  m-5 flex items-center justify-between px-20 py-5 leading-normal text-rose-600 bg-rose-100 rounded-lg"
+            role="alert">
+            <p>{{message}}</p>
+            <svg onclick="return this.parentNode.remove();"
+                class="inline w-4 h-4 fill-current ml-2 hover:opacity-80 cursor-pointer"
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path
+                    d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 464c-114.7 0-208-93.31-208-208S141.3 48 256 48s208 93.31 208 208S370.7 464 256 464zM359.5 133.7c-10.11-8.578-25.28-7.297-33.83 2.828L256 218.8L186.3 136.5C177.8 126.4 162.6 125.1 152.5 133.7C142.4 142.2 141.1 157.4 149.7 167.5L224.6 256l-74.88 88.5c-8.562 10.11-7.297 25.27 2.828 33.83C157 382.1 162.5 384 167.1 384c6.812 0 13.59-2.891 18.34-8.5L256 293.2l69.67 82.34C330.4 381.1 337.2 384 344 384c5.469 0 10.98-1.859 15.48-5.672c10.12-8.562 11.39-23.72 2.828-33.83L287.4 256l74.88-88.5C370.9 157.4 369.6 142.2 359.5 133.7z" />
+            </svg>
+        </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+<div class="h-screen flex items-center justify-center">
+    
+    <div class="w-full max-w-4xl bg-white bg-opacity-80 p-8 rounded-lg shadow-lg backdrop-blur-md">
+        <h2 class="text-2xl font-bold mb-6 text-center text-gray-700">Inventory Movement</h2>
+        <form method="POST" action="{{url_for('insertMovement')}}" class="space-y-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="mb-5">
+                <label for="product" class="block text-base font-medium text-[#07074D]">Select Product</label>
+                <select id="product" name="product" required
+                    class="w-full rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-600 outline-none focus:border-blue-500 focus:ring-blue-500">
+                    {% for product in products%}
+                    <option value="{{product[0]}}"> {{product[1]}}</option>
+                    {%endfor%}
+                    
+                </select>
+            </div>
+            <div class="mb-5">
+                <label for="from_location" class="block text-base font-medium text-[#07074D]">From Location</label>
+                <select id="from_location" name="from_location"
+                    class="w-full rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-600 outline-none focus:border-blue-500 focus:ring-blue-500">
+                    <option value="" >None</option>
+                    {% for location in locations%}
+                    <option value="{{location[0]}}"> {{location[1]}}</option>
+                    {%endfor%}
+                    
+                </select>
+            </div>
+            <div class="mb-5">
+                <label for="to_location" class="block text-base font-medium text-[#07074D]">To Location</label>
+                <select id="to_location" name="to_location" required
+                    class="w-full rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-600 outline-none focus:border-blue-500 focus:ring-blue-500">
+                    {% for location in locations%}
+                    <option value="{{location[0]}}"> {{location[1]}}</option>
+                    {%endfor%}
+                </select>
+            </div>
+            <div class="mb-5">
+                <label for="items" class="block text-base font-medium text-[#07074D]">Number of Items Moved</label>
+                <input type="number" id="items" name="items" min="1" placeholder="Enter number" required
+                    class="w-full rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-600 outline-none focus:border-blue-500 focus:ring-blue-500" />
+            </div>
+            <div class="mb-5">
+                <label for="metric" class="block text-base font-medium text-[#07074D]">Select Metric</label>
+                <select id="metric" name="metric"required
+                    class="w-full rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-600 outline-none focus:border-blue-500 focus:ring-blue-500">
+                    <option value="kg">Kilograms (kg)</option>
+                    <option value="liters">Liters (L)</option>
+                    <option value="boxs">Boxs</option>
+                    <option value="pieces">Pieces</option>
+                    <option value="units">Units</option>
+                    <option value="dozens">Dozen</option>
+                </select>
+            </div>
+            <div class="mb-5">
+                <label for="date" class="block text-base font-medium text-[#07074D]">Date</label>
+                <input type="date" id="date" name="date" required
+                    class="w-full rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-600 outline-none focus:border-blue-500 focus:ring-blue-500" />
+            </div>
+            <div class="mb-5">
+                <label for="time" class="block text-base font-medium text-[#07074D]">Time</label>
+                <input type="time" id="time" name="time" required
+                    class="w-full rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-600 outline-none focus:border-blue-500 focus:ring-blue-500" />
+            </div>
+            <div class="col-span-2 text-center">
+                <button type="submit"
+                    class="inline-block px-8 py-3 rounded-md bg-blue-600 text-white font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
