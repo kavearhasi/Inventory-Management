@@ -1,0 +1,61 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+</head>
+
+<body class="bg-gray-100">
+<div class="min-h-screen flex items-center justify-center flex-col w-full ">
+    {% if msg %}
+        <div class="  m-5 flex items-center justify-between px-20 py-5 leading-normal text-red-600 bg-red-100 rounded-lg"
+            role="alert">
+            <p>{{msg}}</p>
+            <svg onclick="return this.parentNode.remove();"
+                class="inline w-4 h-4 fill-current ml-2 hover:opacity-80 cursor-pointer"
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path
+                    d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 464c-114.7 0-208-93.31-208-208S141.3 48 256 48s208 93.31 208 208S370.7 464 256 464zM359.5 133.7c-10.11-8.578-25.28-7.297-33.83 2.828L256 218.8L186.3 136.5C177.8 126.4 162.6 125.1 152.5 133.7C142.4 142.2 141.1 157.4 149.7 167.5L224.6 256l-74.88 88.5c-8.562 10.11-7.297 25.27 2.828 33.83C157 382.1 162.5 384 167.1 384c6.812 0 13.59-2.891 18.34-8.5L256 293.2l69.67 82.34C330.4 381.1 337.2 384 344 384c5.469 0 10.98-1.859 15.48-5.672c10.12-8.562 11.39-23.72 2.828-33.83L287.4 256l74.88-88.5C370.9 157.4 369.6 142.2 359.5 133.7z" />
+            </svg>
+        </div>
+        {% endif %}
+    <h1 class="text-4xl text-center font-bold mb-10"> Inventory Management</h1>
+    <div class="bg-white  shadow-md rounded-lg px-8 py-6 max-w-md">
+        <h1 class="text-2xl font-bold text-center mb-4 text-gray-800">Hello!</h1>
+        <form action="{{url_for('register')}}" method="post">
+            <div class="mb-4">
+                <label for="name" class="block text-sm font-medium text-gray-700  mb-2">Email Address</label>
+                <input type="text" id="name" name="name"
+                    class="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                    placeholder="Your name" required>
+            </div>
+            <div class="mb-4">
+                <label for="email" class="block text-sm font-medium text-gray-700  mb-2">Email Address</label>
+                <input type="email" id="email" name="email"
+                    class="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                    placeholder="your@email.com" required>
+            </div>
+            <div class="mb-4">
+                <label for="password" class="block text-sm font-medium text-gray-700  mb-2">Password</label>
+                <input type="password" id="password" name="password"
+                    class="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                    placeholder="Enter your password" required>
+                
+            </div>
+            <div class="flex items-center justify-between mb-4">
+                <button type="submit"
+                class="rounded-md bg-blue-600 px-8 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Register</button>
+                <a href="{{url_for('login')}}"
+                    class="text-xs text-indigo-500 hover:text-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Login
+                    Account</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>

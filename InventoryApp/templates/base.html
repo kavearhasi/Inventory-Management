@@ -1,0 +1,66 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+</head>
+
+<body class="bg-gray-100">
+    <header class="bg-blue-600 p-4 text-white" x-data="{ open: false }">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Inventory Management</h1>
+            <button @click="open = !open" class="md:hidden focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
+                    </path>
+                </svg>
+            </button>
+            <nav class="hidden md:flex md:items-center md:space-x-4">
+                <ul class="flex space-x-4">
+                    <li><a href="{{ url_for('home') }}" class="hover:text-blue-200">Home</a></li>
+                    <li><a href="{{ url_for('product') }}" class="hover:text-blue-200">Products</a></li>
+                    <li><a href="{{ url_for('location') }}" class="hover:text-blue-200">Location</a></li>
+                    <li><a href="{{ url_for('product_movement') }}" class="hover:text-blue-200">Product Movement</a>
+                    </li>
+                    <li><a href="{{url_for('report')}}" class="hover:text-blue-200">Reports</a></li>
+                    <li><a href="{{url_for('logout')}}" class="hover:text-blue-200">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div x-show="open" class="md:hidden">
+            <ul class="flex flex-col space-y-2 mt-2">
+                <li><a href="{{ url_for('home') }}" class="block px-4 py-2 hover:bg-blue-700">Home</a></li>
+                <li><a href="{{ url_for('product') }}" class="block px-4 py-2 hover:bg-blue-700">Products</a></li>
+                <li><a href="{{ url_for('location') }}" class="block px-4 py-2 hover:bg-blue-700">Location</a></li>
+                <li><a href="{{ url_for('product_movement') }}" class="block px-4 py-2 hover:bg-blue-700">Product Movement</a></li>
+                <li><a href="{{url_for('report')}}" class="block px-4 py-2 hover:bg-blue-700">Report</a></li>
+            </ul>
+        </div>
+    </header>
+    {% block body %}{% endblock %}
+    <script>
+        
+        document.querySelectorAll('[data-target]').forEach(button => {
+            button.addEventListener('click', function () {
+                const target = this.getAttribute('data-target');
+                document.querySelector(target).classList.remove('hidden');
+            });
+        });
+    
+        document.querySelectorAll('[data-close]').forEach(button => {
+            button.addEventListener('click', function () {
+                const target = this.getAttribute('data-close');
+                document.querySelector(target).classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+
+</html>
